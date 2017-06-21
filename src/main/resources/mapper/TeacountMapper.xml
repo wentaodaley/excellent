@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.zut.excellent.dao.TeacountDao">
+
+	<select id="slectTeacount" resultType="Teacount">
+		select * from teacount
+	</select>
+	<update id="updateTeacount" >
+	 update teacount
+	          <set>
+	             <if test="stuCount != null "> 
+	              stuCount=#{stuCount}
+	               </if>
+	          </set>
+	          where teaRoleId=#{teaRoleId}
+	</update>
+	<update id="updateAllTeacount">
+	update stuteacher 
+		<set>
+		<if test="stuCount != null ">
+		stuCount = #{stuCount}</if>
+		</set>
+	where stuteacher.teaTeacherId in 
+(select teacher.teaTeacherId from teacher where teacher.teaQualifications = #{teaRoleId})
+	
+	</update>
+</mapper>

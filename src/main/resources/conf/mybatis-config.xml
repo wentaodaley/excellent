@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+   <!-- 扫描实体包，为数据库的操作做准备 -->
+    <typeAliases>
+        <package name="cn.edu.zut.excellent.entity" />
+    </typeAliases>
+
+</configuration>

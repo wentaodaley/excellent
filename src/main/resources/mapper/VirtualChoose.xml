@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.zut.excellent.dao.VirtualChooseDao">
+	<insert id="insertVirtualchoose">
+	    insert into virtualchoose(
+	     stuStudentId,
+	     teaTeacherId
+	    )
+	    values(
+	    #{stuStudentId},
+	    #{teaTeacherId}
+	    )
+	</insert>
+	<select id="getallStudent" resultType="Student">
+	     select * from student
+	     where 
+	     student.stuStudentId=(select stuStudentId from virtualchoose)	
+	</select>
+	<select id="getStuByteaId" resultType="Student">
+	     select * from student
+	     where 
+	     student.stuStudentId in 
+	     (select stuStudentId from virtualchoose where virtualchoose.teaTeacherId=#{teaTeacherId})
+	</select>
+	<select id="getTeaByStuId" resultType="Teacher">
+		select * from teacher
+		where teacher.teaTeacherId =
+		(select teaTeacherId from virtualchoose where virtualchoose.stuStudentId=#{stuStudentId})
+	</select>
+	<select id="findStuByName" resultType="Student">
+		select * 
+		from student
+		where student.stuName like #{stuName} and student.stuStudentId in  (select stuStudentId from virtualchoose where teaTeacherId=#{teaTeacherId})
+	</select>
+	<select id="teaStuList" resultType="Student">
+		select * from student
+	    where student.stuStatus=2 and
+	    student.stuStudentId in 
+	    (select stuStudentId from virtualchoose where virtualchoose.teaTeacherId=#{teaTeacherId})
+	</select>
+	<delete id="deleteInfoByStuId">
+		delete from virtualchoose
+		where stuStudentId=#{stuStudentId}
+	</delete>
+	<select id="getTeaId" resultType="String">
+		select teaTeacherId
+		from virtualchoose
+		where stuStudentId=#{stuStudentId}
+	</select>
+</mapper>
